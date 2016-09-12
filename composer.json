@@ -1,0 +1,13 @@
+{
+    "name": "magentoese/module-b2b-sample-data",
+    "type": "magento2-module",
+    "require": {
+        "magento/framework": "*"
+    },
+    "autoload": {
+        "files": [ "registration.php" ],
+        "psr-4": {
+            "MagentoEse\\B2BSampleData\\": ""
+        }
+    }
+}

@@ -1,0 +1,13 @@
+firstname,lastname,email,password,street,city,region,country_id,postcode,telephone
+Dale ,Doback,ddoback@thelumastory.com,Password1,"a:2:{i:0;s:21:""7501 West Cermak Road"";i:1;s:0:"""";}",North Riverside,Illinois,US,14753,484-555-1212
+Nancy,Huff,nhuff@thelumastory.com,Password1,"a:2:{i:0;s:21:""7501 West Cermak Road"";i:1;s:0:"""";}",North Riverside,Illinois,US,14753,484-555-1212
+Derek,Huff,dhuff@thelumastory.com,Password1,"a:2:{i:0;s:21:""14000 Lakeside Circle"";i:1;s:0:"""";}",Sterling Heights,Michigan,US,48311,484-555-1212
+Robert,Doback,rdoback@thelumastory.com,Password1,"a:2:{i:0;s:21:""14000 Lakeside Circle"";i:1;s:0:"""";}",Sterling Heights,Michigan,US,48311,484-555-1212
+Art,Vandelay,avandelay@thelumastory.com,Password1,"a:2:{i:0;s:26:""901 Avenue of the Americas"";i:1;s:0:"""";}",New York,New York,US,10001,484-555-1212
+Elaine,Benes,ebenes@thelumastory.com,Password1,"a:2:{i:0;s:26:""901 Avenue of the Americas"";i:1;s:0:"""";}",New York,New York,US,10001,484-555-1212
+Cosmo,Kramer,ckramer@thelumastory.com,Password1,"a:2:{i:0;s:24:""19501 Biscayne Boulevard"";i:1;s:0:"""";}",Adventura,Florida,US,33180,484-555-1212
+George,Costanza,gcostanza@thelumastory.com,Password1,"a:2:{i:0;s:24:""19501 Biscayne Boulevard"";i:1;s:0:"""";}",Adventura,Florida,US,33180,484-555-1212
+Jim,Halpert,jhalpert@thelumastory.com,Password1,"a:2:{i:0;s:21:""300 Mall at Steamtown"";i:1;s:0:"""";}",Scranton,Pennsylvania,US,18503,484-555-1212
+Pam,Beesly,pbeesly@thelumastory.com,Password1,"a:2:{i:0;s:21:""300 Mall at Steamtown"";i:1;s:0:"""";}",Scranton,Pennsylvania,US,18503,484-555-1212
+Stanley,Hudson,shudson@thelumastory.com,Password1,"a:2:{i:0;s:26:""310 Daniel Webster Highway"";i:1;s:0:"""";}",Nashua,New Hampshire,US,03063,484-555-1212
+Kelly,Kapoor,kkapoor@thelumastory.com,Password1,"a:2:{i:0;s:26:""310 Daniel Webster Highway"";i:1;s:0:"""";}",Nashua,New Hampshire,US,03063,484-555-1212
