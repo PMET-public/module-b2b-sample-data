@@ -71,8 +71,7 @@ class Customer
 
 
     protected $appState;
-    protected $balance;
-    protected $customerRepository;
+
 
     /**
      * @param SampleDataContext $sampleDataContext
@@ -95,9 +94,7 @@ class Customer
         \Magento\Customer\Api\AccountManagementInterface $accountManagement,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
         \Magento\Framework\Api\DataObjectHelper $dataObjectHelper,
-        \Magento\Framework\App\State $appState,
-        \Magento\Customerbalance\Model\BalanceFactory $balance,
-        \Magento\Customer\Model\CustomerRegistry $customerRepository
+        \Magento\Framework\App\State $appState
     ) {
         $this->fixtureManager = $sampleDataContext->getFixtureManager();
         $this->csvReader = $sampleDataContext->getCsvReader();
@@ -109,8 +106,7 @@ class Customer
         $this->storeManager = $storeManager;
         $this->dataObjectHelper = $dataObjectHelper;
         $this->appState = $appState;
-        $this->balance = $balance;
-        $this->customerRepository = $customerRepository;
+
     }
 
     /**
@@ -174,13 +170,7 @@ class Customer
                     [$this->accountManagement, 'createAccount'],
                     [$customer, $row['password']]
                 );
-                $newCust = $this->customerRepository->retrieveByEmail($row['email']);
-                $custBalance = $this->balance->create();
-                $custBalance->setCustomer($newCust);
-                $custBalance->setWebsiteId(1);
-                $custBalance->setAmountDelta(20000);
-                $custBalance->setComment('Credit Approved');
-                $custBalance->save();
+
             }
         }
     }

@@ -22,6 +22,7 @@
      protected $userFactory;
      protected $structure;
      protected $structureRepository;
+     protected $creditLimit;
 
 
      public function __construct(
@@ -31,7 +32,8 @@
         \Magento\Company\Model\CompanyManagement $companyManagement,
          \Magento\Company\Model\ResourceModel\Customer $customerResource,
          \Magento\User\Model\UserFactory $userFactory,
-        \Magento\Company\Model\StructureFactory $structure
+        \Magento\Company\Model\StructureFactory $structure,
+        \Magento\CompanyCredit\Model\CreditLimitFactory $creditLimit
      )
      {
          $this->fixtureManager = $sampleDataContext->getFixtureManager();
@@ -42,6 +44,7 @@
          $this->customerResource = $customerResource;
          $this->user = $userFactory;
          $this->structure = $structure;
+         $this->creditLimit = $creditLimit;
      }
 
      public function install(array $fixtures)
@@ -64,6 +67,13 @@
                  $adminCustomer = $this->customer->get($data['admin_email']);
                  //create company
                  $newCompany = $this->companyCustomer->createCompany($adminCustomer, $data);
+
+                 //add credit balance
+                 $creditBalance = $this->creditLimit->create();
+                 $creditBalance->setCompanyId($newCompany->getId());
+                 $creditBalance->setCreditLimit(20000);
+                 $creditBalance->save();
+
 
                  if(count($data['company_customers']) > 0){
                      foreach ($data['company_customers'] as $companyCustomerEmail) {
