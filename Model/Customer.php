@@ -71,6 +71,8 @@ class Customer
 
 
     protected $appState;
+    protected $balance;
+    protected $customerRepository;
 
     /**
      * @param SampleDataContext $sampleDataContext
@@ -93,7 +95,9 @@ class Customer
         \Magento\Customer\Api\AccountManagementInterface $accountManagement,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
         \Magento\Framework\Api\DataObjectHelper $dataObjectHelper,
-        \Magento\Framework\App\State $appState
+        \Magento\Framework\App\State $appState,
+        \Magento\Customerbalance\Model\BalanceFactory $balance,
+        \Magento\Customer\Model\CustomerRegistry $customerRepository
     ) {
         $this->fixtureManager = $sampleDataContext->getFixtureManager();
         $this->csvReader = $sampleDataContext->getCsvReader();
@@ -105,6 +109,8 @@ class Customer
         $this->storeManager = $storeManager;
         $this->dataObjectHelper = $dataObjectHelper;
         $this->appState = $appState;
+        $this->balance = $balance;
+        $this->customerRepository = $customerRepository;
     }
 
     /**
@@ -155,17 +161,26 @@ class Customer
                     ->setIsDefaultShipping(true);
 
                 $customer = $this->customerFactory->create();
+
                 $this->dataObjectHelper->populateWithArray(
                     $customer,
                     $customerData['profile'],
                     '\Magento\Customer\Api\Data\CustomerInterface'
                 );
                 $customer->setAddresses([$addresses]);
+
                 $this->appState->emulateAreaCode(
                     'frontend',
                     [$this->accountManagement, 'createAccount'],
                     [$customer, $row['password']]
                 );
+                $newCust = $this->customerRepository->retrieveByEmail($row['email']);
+                $custBalance = $this->balance->create();
+                $custBalance->setCustomer($newCust);
+                $custBalance->setWebsiteId(1);
+                $custBalance->setAmountDelta(20000);
+                $custBalance->setComment('Credit Approved');
+                $custBalance->save();
             }
         }
     }
