@@ -21,6 +21,9 @@ class Catalog
     protected $customerGroup;
     protected $companyCustomer;
     protected $customer;
+    protected $companyWithCatalog = 'Vandelay Industries';
+    protected $sharedCatalogGroupCode = 'Tools & Lighting';
+    protected $nonSharedCatalogCompany = array('Prestige Worldwide','Dunder Mifflin');
 
     public function __construct(
         \Magento\Framework\Api\SearchCriteriaBuilder $searchCriteriaBuilder,
@@ -28,7 +31,8 @@ class Catalog
         \Magento\SharedCatalog\Model\SharedCatalogFactory $sharedCatalog,
         \Magento\Customer\Model\GroupFactory $customerGroup,
         \Magento\Company\Model\ResourceModel\Customer $companyCustomer,
-        \Magento\Customer\Model\Customer $customer
+        \Magento\Customer\Model\Customer $customer,
+        \Magento\Customer\Model\Group $group
     )
     {
         $this->searchCriteriaBuilder = $searchCriteriaBuilder;
@@ -37,25 +41,27 @@ class Catalog
         $this->customerGroup = $customerGroup;
         $this->companyCustomer = $companyCustomer;
         $this->customer = $customer;
+        $this->group = $group;
     }
 
     public function install()
     {
+
         //get company
-        $company = $this->getCompany('Prestige Worldwide');
+        $company = $this->getCompany($this->companyWithCatalog);
         //create group
         $groupAttribute = $this->customerGroup->create();
-        $groupAttribute->setCode('Catalog 2');
+        $groupAttribute->setCode($this->sharedCatalogGroupCode);
         //$groupAttribute->set
         $groupAttribute->save();
         $groupId = $groupAttribute->getId();
         //create catalog
         $catalogData = array(
-            "name" => "Catalog 3",
-            "description" => "description",
+            "name" => $this->sharedCatalogGroupCode,
+            "description" => "",
             "customer_group_id" => $groupId
         );
-        $catalog = $this->createCatalog($catalogData);
+        $this->createCatalog($catalogData);
         //attach group to company
         $company->setCustomerGroupId($groupId);
         $company->save();
@@ -67,6 +73,21 @@ class Catalog
             $cust->setGroupId($groupId);
             $cust->save();
          }
+         //set other companies customers to the default catalog group
+        $generalGroup = $this->group->load('General','customer_group_code');
+        $generalGroupId = $generalGroup->getId();
+        foreach($this->nonSharedCatalogCompany as $nonShared){
+            $company = $this->getCompany($nonShared);
+            $companyCustomers = $this->companyCustomer->getCustomerIdsByCompanyId($company->getId());
+            //set customers group to shared catalog
+            foreach($companyCustomers as $customerId){
+                $cust = $this->customer->load($customerId);
+                $cust->setGroupId($generalGroupId);
+                $cust->save();
+            }
+        }
+
+
     }
 
     private function getCompany($companyName){
