@@ -16,6 +16,7 @@ class Installer implements Setup\SampleData\InstallerInterface
     protected $salesrepSetup;
     protected $teamSetup;
     protected $catalogSetup;
+    protected $sharedCatalogConfig;
 
 
 
@@ -24,13 +25,16 @@ class Installer implements Setup\SampleData\InstallerInterface
         \MagentoEse\B2BSampleData\Model\Customer $customerSetup,
         \MagentoEse\B2BSampleData\Model\Salesrep $salesrepSetup,
         \MagentoEse\B2BSampleData\Model\Team $teamSetup,
-        \MagentoEse\B2BSampleData\Model\Catalog $catalogSetup
+        \MagentoEse\B2BSampleData\Model\CompanyCatalog $catalogSetup,
+        \MagentoEse\B2BSampleData\Model\SharedCatalogConfig $sharedCatalogConfig
+
     ) {
         $this->companySetup = $companySetup;
         $this->customerSetup = $customerSetup;
         $this->salesrepSetup = $salesrepSetup;
         $this->teamSetup = $teamSetup;
         $this->catalogSetup = $catalogSetup;
+        $this->sharedCatalogConfig = $sharedCatalogConfig;
 
     }
 
@@ -48,6 +52,8 @@ class Installer implements Setup\SampleData\InstallerInterface
         $this->teamSetup->install(['MagentoEse_B2BSampleData::fixtures/teams.csv']);
 
         $this->catalogSetup->install();
+
+        $this->sharedCatalogConfig->install();
 
     }
 }

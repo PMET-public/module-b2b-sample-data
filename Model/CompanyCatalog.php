@@ -9,7 +9,7 @@ namespace MagentoEse\B2BSampleData\Model;
 //use Magento\Framework\Setup\SampleData\Context as SampleDataContext;
 
 
-class Catalog
+class CompanyCatalog
 {
 
     /**
@@ -21,6 +21,10 @@ class Catalog
     protected $customerGroup;
     protected $companyCustomer;
     protected $customer;
+    protected $management;
+    protected $categoryManagement;
+    protected $productsConfigure;
+    protected $sharedCatalogRepository;
     protected $companyWithCatalog = 'Vandelay Industries';
     protected $sharedCatalogGroupCode = 'Tools & Lighting';
     protected $nonSharedCatalogCompany = array('Prestige Worldwide','Dunder Mifflin');
@@ -32,7 +36,11 @@ class Catalog
         \Magento\Customer\Model\GroupFactory $customerGroup,
         \Magento\Company\Model\ResourceModel\Customer $companyCustomer,
         \Magento\Customer\Model\Customer $customer,
-        \Magento\Customer\Model\Group $group
+        \Magento\Customer\Model\Group $group,
+        \Magento\SharedCatalog\Model\Repository $sharedCatalogRepository,
+        \Magento\SharedCatalog\Model\Management $management,
+        \Magento\SharedCatalog\Model\CategoryManagement $categoryManagement,
+        \Magento\SharedCatalog\Model\Configure\Products $productsConfigure
     )
     {
         $this->searchCriteriaBuilder = $searchCriteriaBuilder;
@@ -42,6 +50,10 @@ class Catalog
         $this->companyCustomer = $companyCustomer;
         $this->customer = $customer;
         $this->group = $group;
+        $this->sharedCatalogRepository = $sharedCatalogRepository;
+        $this->management = $management;
+        $this->categoryManagement = $categoryManagement;
+        $this->productsConfigure = $productsConfigure;
     }
 
     public function install()
@@ -86,7 +98,6 @@ class Catalog
                 $cust->save();
             }
         }
-
 
     }
 
