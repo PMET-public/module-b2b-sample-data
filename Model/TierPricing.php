@@ -6,8 +6,6 @@
   
  namespace MagentoEse\B2BSampleData\Model;
 
- use Magento\Framework\Setup\SampleData\Context as SampleDataContext;
-
 
  class TierPricing
  {
@@ -15,42 +13,50 @@
      /**
       * @var \Magento\Framework\App\Config\ScopeConfigInterface
       */
-     protected $sampleDataContext;
+
+     protected $product;
+     protected $categoryManagement;
 
 
 
      public function __construct(
-         SampleDataContext $sampleDataContext
+
+         \Magento\Catalog\Model\Product $product,
+         \Magento\SharedCatalog\Model\CategoryManagement $categoryManagement
      )
      {
-         $this->fixtureManager = $sampleDataContext->getFixtureManager();
-         $this->csvReader = $sampleDataContext->getCsvReader();
+         $this->product = $product;
+         $this->categoryManagement = $categoryManagement;
 
      }
 
      public function install()
-     //public function install(array $fixtures)
      {
+         /* There appears to be a bug in setting tier price discount by percentage
+         for the near term, the new price will be calculated and set as a new price */
+         //TODO:get category by path (from config)
+         //TODO:get customer group id by name
+         $tierCatIds = array(44);
+         $custGroup = 4;
 
-         /*foreach ($fixtures as $fileName) {
-             $fileName = $this->fixtureManager->getFixture($fileName);
-             if (!file_exists($fileName)) {
-                 continue;
-             }
-             $rows = $this->csvReader->getData($fileName);
-             $header = array_shift($rows);
-             foreach ($rows as $row) {
-                 $data = [];
-                 foreach ($row as $key => $value) {
-                     $data[$header[$key]] = $value;
-                 }
-                 $data['company_customers'] = explode(",", $data['company_customers']);*/
-
-
-
-/*
-             }
-         }*/
+         //TODO:get category ids by path
+         //get product ids by category
+         $tierProducts = array();
+         foreach ($tierCatIds as $productId){
+             $products = $this->categoryManagement->getCategoryProductIds($productId);
+             $tierProducts = array_merge($tierProducts, $products);
+         }
+         foreach($tierProducts as $productId){
+             $tierProduct = $this->product->load($productId);
+             $orgPrice = $tierProduct->getPrice();
+             $tierPriceData = array(
+                 array ('website_id'=>0, 'cust_group'=>4, 'price_qty' => 10, 'price'=>round($orgPrice - ($orgPrice*.1),2)),
+                 array ('website_id'=>0, 'cust_group'=>4, 'price_qty' => 20, 'price'=>round($orgPrice - ($orgPrice*.2),2))
+             );
+            // $foo = $this->product->getTierPrices();
+             $tierProduct->setData('tier_price', $tierPriceData);
+             $tierProduct->save();
+         }
 
      }
 
