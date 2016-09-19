@@ -17,6 +17,7 @@ class Installer implements Setup\SampleData\InstallerInterface
     protected $teamSetup;
     protected $catalogSetup;
     protected $sharedCatalogConfig;
+    protected $tierPricing;
 
 
 
@@ -26,7 +27,9 @@ class Installer implements Setup\SampleData\InstallerInterface
         \MagentoEse\B2BSampleData\Model\Salesrep $salesrepSetup,
         \MagentoEse\B2BSampleData\Model\Team $teamSetup,
         \MagentoEse\B2BSampleData\Model\CompanyCatalog $catalogSetup,
-        \MagentoEse\B2BSampleData\Model\SharedCatalogConfig $sharedCatalogConfig
+        \MagentoEse\B2BSampleData\Model\SharedCatalogConfig $sharedCatalogConfig,
+        \MagentoEse\B2BSampleData\Model\TierPricing $tierPricing,
+        \MagentoEse\B2BSampleData\Model\PreferredProducts $preferredProducts
 
     ) {
         $this->companySetup = $companySetup;
@@ -35,6 +38,8 @@ class Installer implements Setup\SampleData\InstallerInterface
         $this->teamSetup = $teamSetup;
         $this->catalogSetup = $catalogSetup;
         $this->sharedCatalogConfig = $sharedCatalogConfig;
+        $this->tierPricing = $tierPricing;
+        $this->preferredProducts = $preferredProducts;
 
     }
 
@@ -53,7 +58,10 @@ class Installer implements Setup\SampleData\InstallerInterface
 
         $this->catalogSetup->install();
 
-        $this->sharedCatalogConfig->install();
+        $this->tierPricing->install();
 
+        $this->preferredProducts->install(['MagentoEse_B2BSampleData::fixtures/preferredproducts.csv']);
+
+        //$this->sharedCatalogConfig->install();
     }
 }

@@ -23,7 +23,8 @@ namespace MagentoEse\B2BSampleData\Model;
        \Magento\SharedCatalog\Model\ManagementFactory $management,
         \Magento\SharedCatalog\Model\Configure\Products $configureProducts,
        \Magento\SharedCatalog\Model\CategoryManagement $categoryManagement,
-        \Magento\SharedCatalog\Model\Configure\Products $productsConfigure
+        \Magento\SharedCatalog\Model\Configure\Products $productsConfigure,
+        \Magento\Eav\Model\Attribute $attribute
 
    ) {
 
@@ -32,6 +33,7 @@ namespace MagentoEse\B2BSampleData\Model;
        $this->configuredProducts = $configureProducts;
        $this->categoryManagement = $categoryManagement;
        $this->productsConfigure = $productsConfigure;
+       $this->attribute = $attribute;
 
    }
   
@@ -43,6 +45,10 @@ namespace MagentoEse\B2BSampleData\Model;
 
 
      private function addProductsToSharedCatalog(){
+         $attrib = $this->attribute->loadByCode('catalog_product','swatch_image');
+         $attrib->save();
+         $entId = $attrib->getEntityId();
+         $aId = $attrib->getAttributeId();
          /* add products to public catalog */
          //TODO:get category id by path
          //get product ids by category returns array
