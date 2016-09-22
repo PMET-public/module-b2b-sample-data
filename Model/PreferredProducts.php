@@ -23,7 +23,7 @@ class PreferredProducts
 
     public function __construct(
         SampleDataContext $sampleDataContext,
-       \Magento\Catalog\Model\Product $product
+       \Magento\Catalog\Model\ProductFactory $product
     )
     {
         $this->fixtureManager = $sampleDataContext->getFixtureManager();
@@ -48,7 +48,8 @@ class PreferredProducts
                     $data[$header[$key]] = $value;
                 }
                 //set tier prices
-                $tierProduct = $this->product->load($this->product->getIdBySku($data['sku']));
+                $tierProduct = $this->product->create();
+                $tierProduct->load($tierProduct->getIdBySku($data['sku']));
                 $orgPrice = $tierProduct->getPrice();
                 $tierPriceData = array(
                     array ('website_id'=>0, 'cust_group'=>0, 'price_qty' => 10, 'price'=>round($orgPrice - ($orgPrice*.1),2)),
