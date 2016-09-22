@@ -19,7 +19,7 @@ class Installer implements Setup\SampleData\InstallerInterface
     protected $sharedCatalogConfig;
     protected $tierPricing;
     protected $relatedProducts;
-
+    protected $sampleOrder;
 
 
     public function __construct(
@@ -31,7 +31,8 @@ class Installer implements Setup\SampleData\InstallerInterface
         \MagentoEse\B2BSampleData\Model\SharedCatalogConfig$sharedCatalogConfig,
         \MagentoEse\B2BSampleData\Model\TierPricing $tierPricing,
         \MagentoEse\B2BSampleData\Model\PreferredProducts $preferredProducts,
-        \MagentoEse\B2BSampleData\Model\Related $relatedProducts
+        \MagentoEse\B2BSampleData\Model\Related $relatedProducts,
+        \MagentoEse\SalesSampleData\Model\Order $sampleOrder
 
     ) {
         $this->companySetup = $companySetup;
@@ -43,6 +44,7 @@ class Installer implements Setup\SampleData\InstallerInterface
         $this->tierPricing = $tierPricing;
         $this->preferredProducts = $preferredProducts;
         $this->relatedProducts = $relatedProducts;
+        $this->sampleOrder = $sampleOrder;
 
     }
 
@@ -69,6 +71,7 @@ class Installer implements Setup\SampleData\InstallerInterface
 
         $this->tierPricing->install();
 
+        $this->sampleOrder->install(['MagentoEse_B2BSampleData::fixtures/orders.csv']);
 
 
 

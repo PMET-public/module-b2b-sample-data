@@ -17,6 +17,7 @@
             <module name="Magento_CatalogPermissions"/>
             <module name="MagentoEse_B2bAdminConfigurations"/>
             <module name="MagentoEse_B2BCatalogSampleData"/>
+            <module name="MagentoEse_SalesSampleData"/>
         </sequence>
     </module>
 </config>
