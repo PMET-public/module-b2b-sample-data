@@ -27,8 +27,9 @@ class CompanyCatalog
     protected $sharedCatalogRepository;
     protected $companyWithCatalog = 'Vandelay Industries';
     protected $sharedCatalogGroupCode = 'Tools & Lighting';
-    protected $nonSharedCatalogCompany = array('Prestige Worldwide','Dunder Mifflin');
-
+    protected $validCompanyGroupCode = 'Registered Users';
+    protected $nonSharedCatalogCompanies = array('Prestige Worldwide','Dunder Mifflin');
+    //protected $nonSharedCatalogCompany = 'Prestige Worldwide';
     public function __construct(
         \Magento\Framework\Api\SearchCriteriaBuilder $searchCriteriaBuilder,
         \Magento\Company\Model\CompanyRepository $companyRepository,
@@ -80,21 +81,41 @@ class CompanyCatalog
         //get customers attached to the company
         $companyCustomers = $this->companyCustomer->getCustomerIdsByCompanyId($company->getId());
         //set customers group to shared catalog
-        foreach($companyCustomers as $customerId){
+        foreach ($companyCustomers as $customerId) {
             $cust = $this->customer->load($customerId);
             $cust->setGroupId($groupId);
             $cust->save();
-         }
-         //set other companies customers to the default catalog group
-        $generalGroup = $this->group->load('General','customer_group_code');
-        $generalGroupId = $generalGroup->getId();
-        foreach($this->nonSharedCatalogCompany as $nonShared){
-            $company = $this->getCompany($nonShared);
+        }
+        // create catalog for logged in users
+
+
+        //create group
+        $groupAttribute = $this->customerGroup->create();
+        $groupAttribute->setCode($this->validCompanyGroupCode);
+        //$groupAttribute->set
+        $groupAttribute->save();
+        $groupId = $groupAttribute->getId();
+        //create catalog
+        $catalogData = array(
+            "name" => $this->validCompanyGroupCode,
+            "description" => "",
+            "customer_group_id" => $groupId
+        );
+        $this->createCatalog($catalogData);
+
+        //get company
+        foreach ($this->nonSharedCatalogCompanies as $nonSharedCatalogCompany){
+            $company = $this->getCompany($nonSharedCatalogCompany);
+
+            //attach group to company
+            $company->setCustomerGroupId($groupId);
+            $company->save();
+            //get customers attached to the company
             $companyCustomers = $this->companyCustomer->getCustomerIdsByCompanyId($company->getId());
             //set customers group to shared catalog
-            foreach($companyCustomers as $customerId){
+            foreach ($companyCustomers as $customerId) {
                 $cust = $this->customer->load($customerId);
-                $cust->setGroupId($generalGroupId);
+                $cust->setGroupId($groupId);
                 $cust->save();
             }
         }

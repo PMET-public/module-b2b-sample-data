@@ -21,6 +21,7 @@ class SharedCatalogConfig {
     protected $categoryCollection;
     protected $searchCriteriaBuilder;
     protected $sharedCatalogName = 'Tools & Lighting';
+    protected $validCatalogName = 'Registered Users';
 
     public function __construct(
         \Magento\SharedCatalog\Model\Repository $sharedCatalogRepository,
@@ -101,6 +102,20 @@ class SharedCatalogConfig {
             //Ignore the error...indexer not found, but not an issue for this operation
             $catch=0;
         }
+
+        //get registered User catalog
+        $catalog = $this->getCatalogByName($this->validCatalogName);
+        $manageValid = $this->management->create();
+        $validCatalog = $this->sharedCatalogRepository->get($catalog->getId());
+        //assign to default catalog
+        //$publicSkus = $this->productsConfigure->getProductSkus($publicProducts);
+        try {
+            $manageValid->assignProductsToCatalog($validCatalog, $publicSkus);
+        }catch(\InvalidArgumentException $e){
+            //Ignore the error...indexer not found, but not an issue for this operation
+            $catch=0;
+        }
+
 
 
 
