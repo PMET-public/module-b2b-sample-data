@@ -1,4 +1,6 @@
 customer_email,currency,shipping_method,payment,product,refund,status
+ddoback@thelumastory.com,USD,flatrate_flatrate,checkmo,"sku=WRMG4011FO,qty=17;sku=PHI85PLCTLED26H4000IF4P,qty=20",no,processing
+rdoback@thelumastory.com,USD,flatrate_flatrate,checkmo,"sku=MIL49560102,qty=6",no,complete
 dhuff@thelumastory.com,USD,flatrate_flatrate,checkmo,"sku=MIL49560102,qty=5",no,complete
 shudson@thelumastory.com,USD,flatrate_flatrate,checkmo,"sku=MIL49560102,qty=6",no,complete
 kkapoor@thelumastory.com,USD,flatrate_flatrate,checkmo,"sku=PHI105A19COREPRO2700DIM1,qty=5;sku=KEEECF3215LA641ANWUNVBRP,qty=5;sku=MIL2375XXL,qty=5",no,processing
