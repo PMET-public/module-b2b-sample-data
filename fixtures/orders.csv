@@ -1,4 +1,8 @@
 customer_email,currency,shipping_method,payment,product,refund,status
+dhuff@thelumastory.com,USD,flatrate_flatrate,checkmo,"sku=MIL49560102,qty=5",no,complete
+shudson@thelumastory.com,USD,flatrate_flatrate,checkmo,"sku=MIL49560102,qty=6",no,complete
+kkapoor@thelumastory.com,USD,flatrate_flatrate,checkmo,"sku=PHI105A19COREPRO2700DIM1,qty=5;sku=KEEECF3215LA641ANWUNVBRP,qty=5;sku=MIL2375XXL,qty=5",no,processing
+rdoback@thelumastory.com,USD,flatrate_flatrate,checkmo,"sku=MIL49560102,qty=6",no,complete
 avandelay@thelumastory.com,USD,flatrate_flatrate,checkmo,"sku=LCL8201BK,qty=25",no,complete
 ckramer@thelumastory.com,USD,flatrate_flatrate,checkmo,"sku=PHI12T8484000IF101,qty=12",no,complete
 pbeesly@thelumastory.com,USD,flatrate_flatrate,checkmo,"sku=MIL260422,qty=5",no,complete
@@ -11,6 +15,7 @@ avandelay@thelumastory.com,USD,flatrate_flatrate,checkmo,"sku=MIL49569105,qty=5"
 ddoback@thelumastory.com,USD,flatrate_flatrate,checkmo,"sku=ORT4030054913,qty=25",no,complete
 nhuff@thelumastory.com,USD,flatrate_flatrate,checkmo,"sku=SIEHFD63B250,qty=5;sku=LCL316ALX,qty=5",no,processing
 jhalpert@thelumastory.com,USD,flatrate_flatrate,checkmo,"sku=LCL316ALX,qty=25",no,processing
+gcostanza@thelumastory.com,USD,flatrate_flatrate,checkmo,"sku=PHI12T8484000IF101,qty=7",no,complete
 avandelay@thelumastory.com,USD,flatrate_flatrate,checkmo,"sku=LCL8201BK,qty=25",no,complete
 pbeesly@thelumastory.com,USD,flatrate_flatrate,checkmo,"sku=MIL48553510,qty=7",no,processing
 pbeesly@thelumastory.com,USD,flatrate_flatrate,checkmo,"sku=PHIPLC26W304PALTO,qty=5;sku=PHI19A212700WHIDIM,qty=5;sku=PHI95A19LED827ND120V,qty=5;sku=PHI5GU10LED27002200F35,qty=5",no,processing
@@ -18,6 +23,12 @@ ckramer@thelumastory.com,USD,flatrate_flatrate,checkmo,"sku=PHI105A19COREPRO2700
 ddoback@thelumastory.com,USD,flatrate_flatrate,checkmo,"sku=MIL260422,qty=6",no,complete
 avandelay@thelumastory.com,USD,flatrate_flatrate,checkmo,"sku=PHI95A19LED827ND120V,qty=13;sku=MIL260322,qty=6",no,processing
 nhuff@thelumastory.com,USD,flatrate_flatrate,checkmo,"sku=MIL49560102,qty=15",no,complete
+gcostanza@thelumastory.com,USD,flatrate_flatrate,checkmo,"sku=PHI105A19COREPRO2700DIM1,qty=5;sku=KEEECF3215LA641ANWUNVBRP,qty=5;sku=MIL2375XXL,qty=5",no,processing
 nhuff@thelumastory.com,USD,flatrate_flatrate,checkmo,"sku=PHIPLC26W304PALTO,qty=10;sku=PHI19A212700WHIDIM,qty=100;sku=PHI95A19LED827ND120V,qty=120;sku=PHI5GU10LED27002200F35,qty=60",no,processing
-ddoback@thelumastory.com,USD,flatrate_flatrate,checkmo,"sku=WRMG4011FO,qty=17;sku=PHI85PLCTLED26H4000IF4P,qty=20",no,processing
 ckramer@thelumastory.com,USD,flatrate_flatrate,checkmo,"sku=MIL260422,qty=5;sku=LCL8201BK,qty=25;sku=MIL48137237,qty=25",no,processing
+
+
+
+
+
+
