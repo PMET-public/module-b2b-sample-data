@@ -6,7 +6,7 @@
  */
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
-    <module name="MagentoEse_B2BSampleData" setup_version="0.0.1">
+    <module name="MagentoEse_B2BSampleData" setup_version="0.0.2">
         <sequence>
             <module name="Magento_B2b"/>
             <module name="Magento_Company"/>
@@ -18,6 +18,7 @@
             <module name="MagentoEse_B2bAdminConfigurations"/>
             <module name="MagentoEse_B2BCatalogSampleData"/>
             <module name="MagentoEse_SalesSampleData"/>
+            <module name="FireGento_FastSimpleImport2"/>
         </sequence>
     </module>
 </config>
