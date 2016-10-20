@@ -14,10 +14,13 @@ use Magento\Framework\Setup\ModuleDataSetupInterface;
 class UpgradeData implements UpgradeDataInterface
 {
     protected $customerUpgrade;
+    protected $orderUpgrade;
 
-    public function __construct(\MagentoEse\B2BSampleData\Model\CustomerUpgrade $customerUpgrade)
+    public function __construct(\MagentoEse\B2BSampleData\Model\CustomerUpgrade $customerUpgrade,
+        \MagentoEse\B2BSampleData\Model\OrderUpgrade $orderUpgrade)
     {
         $this->customerUpgrade = $customerUpgrade;
+        $this->orderUpgrade = $orderUpgrade;
 
     }
 
@@ -27,8 +30,8 @@ class UpgradeData implements UpgradeDataInterface
         if (version_compare($context->getVersion(), '0.0.2') < 0
         ) {
             //fix elaine's address
-            $this->customerUpgrade->install(['MagentoEse_B2BSampleData::fixtures/0.0.2.csv']);
-
+            $this->customerUpgrade->install(['MagentoEse_B2BSampleData::fixtures/0.0.2_customerUpdate.csv']);
+            $this->orderUpgrade->setDateByOrderId(['MagentoEse_B2BSampleData::fixtures/0.0.2_orderUpdate.csv']);
         }
 
 
