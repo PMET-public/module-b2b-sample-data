@@ -22,66 +22,56 @@ class SharedCatalogConfig {
     protected $searchCriteriaBuilder;
     protected $sharedCatalogName = 'Tools & Lighting';
     protected $validCatalogName = 'Registered Users';
+    protected $customCats = array('All Products/Lighting','All Products/Tools');
+    protected $publicCats = array('All Products');
 
     public function __construct(
         \Magento\SharedCatalog\Model\Repository $sharedCatalogRepository,
         \Magento\SharedCatalog\Model\ManagementFactory $management,
-        \Magento\SharedCatalog\Model\Configure\Products $configureProducts,
-        \Magento\SharedCatalog\Model\CategoryManagement $categoryManagement,
-        \Magento\SharedCatalog\Model\Configure\Products $productsConfigure,
+        \Magento\SharedCatalog\Api\ProductManagementInterface $productManagement,
+       /* \Magento\SharedCatalog\Model\Configure\Products $productsConfigure,*/
         \Magento\Eav\Model\Attribute $attribute,
         \Magento\Eav\Model\Config $eavConfig,
         \Magento\Catalog\Model\ResourceModel\Category\Collection $categoryCollection,
-        \Magento\Framework\Api\SearchCriteriaBuilder $searchCriteriaBuilder
+        \Magento\Framework\Api\SearchCriteriaBuilder $searchCriteriaBuilder,
+        \Magento\Catalog\Api\ProductRepositoryInterface $productRepository,
+        \Magento\SharedCatalog\Model\SharedCatalogAssignment $sharedCatalogAssignment
     )
     {
 
 
         $this->sharedCatalogRepository = $sharedCatalogRepository;
         $this->management = $management;
-        $this->configuredProducts = $configureProducts;
-        $this->categoryManagement = $categoryManagement;
-        $this->productsConfigure = $productsConfigure;
+        $this->productManagement = $productManagement;
+        //$this->productsConfigure = $productsConfigure;
         $this->attribute = $attribute;
         $this->eavConfig = $eavConfig;
         $this->categoryCollection = $categoryCollection;
         $this->searchCriteriaBuilder = $searchCriteriaBuilder;
+        $this->productRepository = $productRepository;
+        $this->sharedCatalogAssignment = $sharedCatalogAssignment;
 
     }
 
     public function install(){
         /* add products to custom catalog */
-        $customCats = array('All Products/Lighting','All Products/Tools');
-        $publicCats = array('All Products');
-        //TODO: allow multiple catalogs via csv file
-        //set category ids tools = 13 lighting = 10
-        //$customCatIds = array(13,10);
-        $publicCatIds = array();
-        $customCatIds = array();
+        $this->assignProductsToCatalog($this->sharedCatalogName, $this->customCats);
+        /* add products to registered user catalog */
+        $this->assignProductsToCatalog($this->validCatalogName, $this->publicCats);
+       //  $customCatIds = array();
 
-        foreach ($customCats as $categoryPath){
-            array_push($customCatIds,$this->getIdFromPath($this->_initCategories(),$categoryPath));
-        }
-        //get product ids by category
-        $customProducts = array();
-        foreach ($customCatIds as $customCat){
-            $products = $this->categoryManagement->getCategoryProductIds($customCat);
-            $customProducts = array_merge($customProducts, $products);
-        }
-        //get catalog
-        $catalog = $this->getCatalogByName($this->sharedCatalogName);
-        $manageCustom = $this->management->create();
-        $customCatalog = $this->sharedCatalogRepository->get($catalog->getId());
+       // foreach ($this->customCats as $categoryPath){
+       //     array_push($customCatIds,$this->getIdFromPath($this->_initCategories(),$categoryPath));
+       // }
+
+        //get catalog id
+       // $catalogId = $this->getCatalogByName($this->sharedCatalogName)->getid();
         //assign to catalog
-        try {
-            $manageCustom->assignProductsToCatalog($customCatalog,$this->productsConfigure->getProductSkus($customProducts));
-        }catch(\InvalidArgumentException $e){
-            //Ignore the error...indexer not found, but not an issue for this operation
-            $catch=0;
-        }
-
+       // $this->sharedCatalogAssignment->assignProductsForCategories($catalogId,$customCatIds);
+        //assign to pubic catalog
+        //$publicCatlogId = $this->
         //get product ids by category returns array
-        foreach ($publicCats as $categoryPath){
+        /*foreach ($publicCats as $categoryPath){
             array_push($publicCatIds,$this->getIdFromPath($this->_initCategories(),$categoryPath));
         }
         $publicProducts = array();
@@ -114,7 +104,7 @@ class SharedCatalogConfig {
         }catch(\InvalidArgumentException $e){
             //Ignore the error...indexer not found, but not an issue for this operation
             $catch=0;
-        }
+        }*/
 
 
 
@@ -162,6 +152,17 @@ class SharedCatalogConfig {
         $catalogFilter->addFilter('name',$catalogName);
         $catalogList = $this->sharedCatalogRepository->getList($catalogFilter->create())->getItems();
         return reset($catalogList);
+    }
+    private function assignProductsToCatalog($catalogName, array $categoryPaths)
+    {
+        $customCatIds = array();
+        foreach ($categoryPaths as $categoryPath){
+            array_push($customCatIds,$this->getIdFromPath($this->_initCategories(),$categoryPath));
+        }
+        //get catalog id
+        $catalogId = $this->getCatalogByName($catalogName)->getid();
+        //assign to catalog
+        $this->sharedCatalogAssignment->assignProductsForCategories($catalogId,$customCatIds);
     }
 }
 

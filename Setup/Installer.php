@@ -28,7 +28,7 @@ class Installer implements Setup\SampleData\InstallerInterface
         \MagentoEse\B2BSampleData\Model\Salesrep $salesrepSetup,
         \MagentoEse\B2BSampleData\Model\Team $teamSetup,
         \MagentoEse\B2BSampleData\Model\CompanyCatalog $catalogSetup,
-        \MagentoEse\B2BSampleData\Model\SharedCatalogConfig$sharedCatalogConfig,
+        \MagentoEse\B2BSampleData\Model\SharedCatalogConfig $sharedCatalogConfig,
         \MagentoEse\B2BSampleData\Model\TierPricing $tierPricing,
         \MagentoEse\B2BSampleData\Model\PreferredProducts $preferredProducts,
         \MagentoEse\B2BSampleData\Model\Related $relatedProducts,
@@ -69,7 +69,7 @@ class Installer implements Setup\SampleData\InstallerInterface
 
         $this->sharedCatalogConfig->install();
 
-        $this->tierPricing->install();
+        //$this->tierPricing->install();
 
         $this->sampleOrder->install(['MagentoEse_B2BSampleData::fixtures/orders.csv']);
 

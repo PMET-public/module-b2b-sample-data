@@ -23,7 +23,6 @@ class CompanyCatalog
     protected $customer;
     protected $management;
     protected $categoryManagement;
-    protected $productsConfigure;
     protected $sharedCatalogRepository;
     protected $companyWithCatalog = 'Vandelay Industries';
     protected $sharedCatalogGroupCode = 'Tools & Lighting';
@@ -40,8 +39,7 @@ class CompanyCatalog
         \Magento\Customer\Model\Group $group,
         \Magento\SharedCatalog\Model\Repository $sharedCatalogRepository,
         \Magento\SharedCatalog\Model\Management $management,
-        \Magento\SharedCatalog\Model\CategoryManagement $categoryManagement,
-        \Magento\SharedCatalog\Model\Configure\Products $productsConfigure
+        \Magento\SharedCatalog\Model\CategoryManagement $categoryManagement
     )
     {
         $this->searchCriteriaBuilder = $searchCriteriaBuilder;
@@ -54,7 +52,6 @@ class CompanyCatalog
         $this->sharedCatalogRepository = $sharedCatalogRepository;
         $this->management = $management;
         $this->categoryManagement = $categoryManagement;
-        $this->productsConfigure = $productsConfigure;
     }
 
     public function install()
