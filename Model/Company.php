@@ -82,6 +82,7 @@
 
              }
          }
+         $this->__destruct();
 
      }
      private function addCustomerToCompany($newCompany,$companyCustomer){
@@ -103,5 +104,14 @@
          $newStruct->setPath('1/2');
          $newStruct->setLevel(1);
          $newStruct->save();
+     }
+     public function __destruct(){
+         $this->fixtureManager = null;
+         $this->csvReader = null;
+         $this->companyCustomer = null;
+         $this->customer = null;
+         $this->customerResource = null;
+         $this->structure = null;
+         $this->creditLimitManagement = null;
      }
  }

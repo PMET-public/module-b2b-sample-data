@@ -173,6 +173,7 @@ class Customer
 
             }
         }
+        $this->__destruct();
     }
 
     /**
@@ -262,5 +263,17 @@ class Customer
     {
         $country = $this->countryFactory->create()->loadByCode($address['country_id']);
         return $country->getRegionCollection()->addFieldToFilter('name', $address['region'])->getFirstItem()->getId();
+    }
+    public function __destruct(){
+        $this->fixtureManager = null;
+        $this->csvReader = null;
+        $this->countryFactory = null;
+        $this->customerFactory = null;
+        $this->addressFactory = null;
+        $this->regionFactory = null;
+        $this->accountManagement = null;
+        $this->storeManager = null;
+        $this->dataObjectHelper = null;
+        $this->appState = null;
     }
 }

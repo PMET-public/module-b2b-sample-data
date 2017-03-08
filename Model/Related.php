@@ -64,6 +64,12 @@ use Magento\Framework\Setup\SampleData\Context as SampleDataContext;
              }
 
          }
+         $this->__destruct();
+     }
+     public function __destruct(){
+         $this->fixtureManager = null;
+         $this->csvReader = null;
+         $this->rule = null;
      }
 
  }

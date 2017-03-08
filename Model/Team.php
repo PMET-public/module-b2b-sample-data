@@ -97,6 +97,7 @@
              }
 
          }
+         $this->__destruct();
      }
      private function addTeamToTree($teamId,$parentId){
          //path is structure_id of admin user / structure_id of team)
@@ -136,6 +137,17 @@
          $builder->addFilter('entity_type',$entityType);
          $structures = $this->structureRepository->getList($builder->create())->getItems();
          return reset($structures);
+     }
+     public function __destruct(){
+         $this->fixtureManager = null;
+         $this->csvReader =null;
+         $this->teamFactory = null;
+         $this->structure = null;
+         $this->structureRepository = null;
+         $this->searchCriteriaBuilder = null;
+         $this->companyRepository = null;
+         $this->companyManagement = null;
+         $this->customer = null;
      }
 
  }

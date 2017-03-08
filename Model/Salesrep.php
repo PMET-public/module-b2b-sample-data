@@ -88,6 +88,13 @@
                  $userRole->save();
              }
          }
-
+        $this->__destruct();
+     }
+     public function __destruct(){
+         $this->fixtureManager = null;
+         $this->csvReader = null;
+         $this->user = null;
+         $this->roleFactory = null;
+         $this->rulesFactory = null;
      }
  }

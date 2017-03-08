@@ -65,7 +65,12 @@ class PreferredProducts
             }
 
         }
-
+        $this->__destruct();
+    }
+    public function __destruct(){
+        $this->fixtureManager = null;
+        $this->csvReader = null;
+        $this->product = null;
     }
 
 }

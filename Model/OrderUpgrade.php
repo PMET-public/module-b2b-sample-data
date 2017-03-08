@@ -120,4 +120,12 @@ class OrderUpgrade
         $result = $connection->fetchAll($sql);
         return $result[0]['hours'];
     }
+    public function __destruct(){
+        $this->fixtureManager = null;
+        $this->csvReader = null;
+        $this->resourceConnection = null;
+        $this->aggregateSalesReportBestsellersData = null;
+        $this->aggregateSalesReportInvoicedData = null;
+        $this->aggregateSalesReportOrderData = null;
+    }
 }

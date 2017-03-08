@@ -116,7 +116,7 @@ class CompanyCatalog
                 $cust->save();
             }
         }
-
+        $this->__destruct();
     }
 
     private function getCompany($companyName){
@@ -136,6 +136,18 @@ class CompanyCatalog
         $catalog->setCustomerGroupId($catalogData['customer_group_id']);
         $catalog->save();
         return $catalog;
+    }
+    public function __destruct(){
+        $this->searchCriteriaBuilder = null;
+        $this->companyRepository = null;
+        $this->sharedCatalog = null;
+        $this->customerGroup = null;
+        $this->companyCustomer = null;
+        $this->customer = null;
+        $this->group = null;
+        $this->sharedCatalogRepository = null;
+        $this->management = null;
+        $this->categoryManagement = null;
     }
 
 }

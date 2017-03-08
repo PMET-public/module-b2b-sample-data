@@ -59,6 +59,12 @@ class CustomerUpgrade
             print_r($this->importerModel->getErrorMessages());
             unset ($_productsArray);
         }
+        $this->__destruct();
 
+    }
+    public function __destruct(){
+        $this->fixtureManager = null;
+        $this->csvReader = null;
+        $this->objectManager=null;
     }
 }

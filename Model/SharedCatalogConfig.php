@@ -37,6 +37,7 @@ class SharedCatalogConfig {
         $this->assignProductsToCatalog($this->validCatalogName, $this->publicCats);
         /* add products to default catalog */
         $this->assignProductsToCatalog($this->publicCatalogName, $this->publicCats);
+        $this->__destruct();
     }
 
     private function assignProductsToCatalog($catalogName, array $categoryPaths)
@@ -91,5 +92,12 @@ class SharedCatalogConfig {
         $catalogFilter->addFilter('name',$catalogName);
         $catalogList = $this->sharedCatalogRepository->getList($catalogFilter->create())->getItems();
         return reset($catalogList);
+    }
+    public function __destruct(){
+        $this->sharedCatalogRepository = null;
+        $this->categoryCollection = null;
+        $this->searchCriteriaBuilder = null;
+        $this->sharedCatalogAssignment = null;
+
     }
 }

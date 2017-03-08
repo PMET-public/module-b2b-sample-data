@@ -76,7 +76,7 @@ class TierPricing
             $tierProduct->save();
 
         }
-
+        $this->__destruct();
     }
 
     private function getProductsByCategoryIds(array $categoriesIds)
@@ -127,6 +127,14 @@ class TierPricing
             }
         }
         return $categories;
+    }
+    public function __destruct(){
+        $this->product = null;
+        $this->categoryCollection = null;
+        $this->group = null;
+        $this->sharedCatalog = null;
+        $this->searchCriteriaBuilder = null;
+        $this->productRepository = null;
     }
 
 
