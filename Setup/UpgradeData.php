@@ -30,8 +30,8 @@ class UpgradeData implements UpgradeDataInterface
         if (version_compare($context->getVersion(), '0.0.2') < 0
         ) {
             //fix elaine's address
-            $this->customerUpgrade->install(['MagentoEse_B2BSampleData::fixtures/0.0.2_customerUpdate.csv']);
-            $this->orderUpgrade->setDateByOrderId(['MagentoEse_B2BSampleData::fixtures/0.0.2_orderUpdate.csv']);
+            //$this->customerUpgrade->install(['MagentoEse_B2BSampleData::fixtures/0.0.2_customerUpdate.csv']);
+            //$this->orderUpgrade->setDateByOrderId(['MagentoEse_B2BSampleData::fixtures/0.0.2_orderUpdate.csv']);
         }
 
 

@@ -24,15 +24,19 @@ class TierPricing
     public function __construct(
 
         \Magento\Catalog\Model\ProductFactory $product,
-        \Magento\SharedCatalog\Model\CategoryManagement $categoryManagement,
         \Magento\Catalog\Model\ResourceModel\Category\Collection $categoryCollection,
-        \Magento\Customer\Model\Group $group
+        \Magento\Customer\Model\Group $group,
+        \Magento\SharedCatalog\Api\Data\SharedCatalogInterface $sharedCatalog,
+        \Magento\Framework\Api\SearchCriteriaBuilder $searchCriteriaBuilder,
+        \Magento\Catalog\Api\ProductRepositoryInterface $productRepository
     )
     {
         $this->product = $product;
-        $this->categoryManagement = $categoryManagement;
         $this->categoryCollection = $categoryCollection;
         $this->group = $group;
+        $this->sharedCatalog = $sharedCatalog;
+        $this->searchCriteriaBuilder = $searchCriteriaBuilder;
+        $this->productRepository = $productRepository;
 
     }
 
@@ -52,12 +56,14 @@ class TierPricing
         $custGroup = $this->getGroupIdFromName('Tools & Lighting');
 
         //get product ids by category
-        $tierProducts = array();
+       /* $tierProducts = array();
         foreach ($tierCatIds as $productId){
             $products = $this->categoryManagement->getCategoryProductIds($productId);
             $tierProducts = array_merge($tierProducts, $products);
-        }
-        foreach($tierProducts as $productId){
+        }*/
+        $tierProducts = $this->getProductsByCategoryIds($tierCatIds);
+        foreach($tierProducts as $product){
+            $productId = $product->getId();
             $tierProduct = $this->product->create();
             $tierProduct->load($productId);
             $orgPrice = $tierProduct->getPrice();
@@ -71,6 +77,15 @@ class TierPricing
 
         }
 
+    }
+
+    private function getProductsByCategoryIds(array $categoriesIds)
+    {
+        /** @var \Magento\Framework\Api\SearchCriteria $searchCriteria */
+        $searchCriteria = $this->searchCriteriaBuilder
+            ->addFilter('category_id', $categoriesIds, 'in')
+            ->create();
+        return $this->productRepository->getList($searchCriteria)->getItems();
     }
 
     protected function getGroupIdFromName($name){

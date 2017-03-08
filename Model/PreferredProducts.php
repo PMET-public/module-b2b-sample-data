@@ -54,10 +54,10 @@ class PreferredProducts
                 $tierPriceData = array(
                    // array ('website_id'=>0, 'cust_group'=>0, 'price_qty' => 10, 'price'=>round($orgPrice - ($orgPrice*.1),2)),
                    // array ('website_id'=>0,'cust_group'=>0, 'price_qty' => 20, 'price'=>round($orgPrice - ($orgPrice*.2),2)),
-                    array ('website_id'=>0, 'cust_group'=>4, 'price_qty' => 10, 'price'=>round($orgPrice - ($orgPrice*.1),2)),
-                    array ('website_id'=>0, 'cust_group'=>4, 'price_qty' => 20, 'price'=>round($orgPrice - ($orgPrice*.2),2)),
-                    array ('website_id'=>0, 'cust_group'=>5, 'price_qty' => 10, 'price'=>round($orgPrice - ($orgPrice*.1),2)),
-                    array ('website_id'=>0, 'cust_group'=>5, 'price_qty' => 20, 'price'=>round($orgPrice - ($orgPrice*.2),2))
+                    array ('website_id'=>0, 'cust_group'=>4, 'price_qty' => 10, 'percentage_value'=>round($orgPrice - ($orgPrice*.1),2)),
+                    array ('website_id'=>0, 'cust_group'=>4, 'price_qty' => 20, 'percentage_value'=>round($orgPrice - ($orgPrice*.2),2)),
+                    array ('website_id'=>0, 'cust_group'=>5, 'price_qty' => 10, 'percentage_value'=>round($orgPrice - ($orgPrice*.1),2)),
+                    array ('website_id'=>0, 'cust_group'=>5, 'price_qty' => 20, 'percentage_value'=>round($orgPrice - ($orgPrice*.2),2))
                 );
                 $tierProduct->setData('tier_price', $tierPriceData);
                 $tierProduct->save();

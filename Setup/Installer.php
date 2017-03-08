@@ -20,6 +20,7 @@ class Installer implements Setup\SampleData\InstallerInterface
     protected $tierPricing;
     protected $relatedProducts;
     protected $sampleOrder;
+    protected $index;
 
 
     public function __construct(
@@ -32,7 +33,8 @@ class Installer implements Setup\SampleData\InstallerInterface
         \MagentoEse\B2BSampleData\Model\TierPricing $tierPricing,
         \MagentoEse\B2BSampleData\Model\PreferredProducts $preferredProducts,
         \MagentoEse\B2BSampleData\Model\Related $relatedProducts,
-        \MagentoEse\SalesSampleData\Model\Order $sampleOrder
+        \MagentoEse\SalesSampleData\Model\Order $sampleOrder,
+        \Magento\Indexer\Model\Processor $index
 
     ) {
         $this->companySetup = $companySetup;
@@ -45,6 +47,7 @@ class Installer implements Setup\SampleData\InstallerInterface
         $this->preferredProducts = $preferredProducts;
         $this->relatedProducts = $relatedProducts;
         $this->sampleOrder = $sampleOrder;
+        $this->index = $index;
 
     }
 
@@ -53,7 +56,7 @@ class Installer implements Setup\SampleData\InstallerInterface
      */
     public function install()
     {
-        $this->salesrepSetup->install(['MagentoEse_B2BSampleData::fixtures/salesreps.csv']);
+       $this->salesrepSetup->install(['MagentoEse_B2BSampleData::fixtures/salesreps.csv']);
 
         $this->customerSetup->install(['MagentoEse_B2BSampleData::fixtures/customers.csv']);
 
@@ -63,13 +66,15 @@ class Installer implements Setup\SampleData\InstallerInterface
 
         $this->catalogSetup->install();
 
-        $this->preferredProducts->install(['MagentoEse_B2BSampleData::fixtures/preferredproducts.csv']);
-
         $this->relatedProducts->install(['MagentoEse_B2BSampleData::fixtures/related_products.csv']);
+
+        //$this->index->reindexAll();
 
         $this->sharedCatalogConfig->install();
 
-        //$this->tierPricing->install();
+        $this->preferredProducts->install(['MagentoEse_B2BSampleData::fixtures/preferredproducts.csv']);
+
+        $this->tierPricing->install();
 
         $this->sampleOrder->install(['MagentoEse_B2BSampleData::fixtures/orders.csv']);
 

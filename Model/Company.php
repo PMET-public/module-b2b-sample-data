@@ -18,33 +18,27 @@
      protected $sampleDataContext;
      protected $companyCustomer;
      protected $customer;
-     protected $companyManagement;
-     protected $userFactory;
      protected $structure;
-     protected $structureRepository;
      protected $creditLimit;
+     protected $creditLimitManagement;
 
 
      public function __construct(
          SampleDataContext $sampleDataContext,
          \Magento\Company\Model\Customer\Company $companyCustomer,
          \Magento\Customer\Api\CustomerRepositoryInterface $customer,
-        \Magento\Company\Model\CompanyManagement $companyManagement,
          \Magento\Company\Model\ResourceModel\Customer $customerResource,
-         \Magento\User\Model\UserFactory $userFactory,
-        \Magento\Company\Model\StructureFactory $structure,
-        \Magento\CompanyCredit\Model\CreditLimitFactory $creditLimit
+        \Magento\Company\Api\Data\StructureInterfaceFactory $structure,
+        \Magento\CompanyCredit\Api\CreditLimitManagementInterface $creditLimitManagement
      )
      {
          $this->fixtureManager = $sampleDataContext->getFixtureManager();
          $this->csvReader = $sampleDataContext->getCsvReader();
          $this->companyCustomer = $companyCustomer;
          $this->customer = $customer;
-         $this->companyManagement = $companyManagement;
          $this->customerResource = $customerResource;
-         $this->user = $userFactory;
          $this->structure = $structure;
-         $this->creditLimit = $creditLimit;
+         $this->creditLimitManagement = $creditLimitManagement;
      }
 
      public function install(array $fixtures)
@@ -65,24 +59,22 @@
                  $data['company_customers'] = explode(",", $data['company_customers']);
                  //get customer for admin user
                  $adminCustomer = $this->customer->get($data['admin_email']);
+                 $data['company_email']=$data['admin_email'];
                  //create company
                  $newCompany = $this->companyCustomer->createCompany($adminCustomer, $data);
+                 //set credit limit
+                 $creditLimit = $this->creditLimitManagement->getCreditByCompanyId($newCompany->getId());
+                 $creditLimit->setCreditLimit($data['credit_limit']);
+                 $creditLimit->save();
 
-                 //add credit balance
-                 $creditBalance = $this->creditLimit->create();
-                 $creditBalance->setCompanyId($newCompany->getId());
-                 $creditBalance->setCreditLimit(20000);
-                 $creditBalance->save();
-
-
-                 if(count($data['company_customers']) > 0){
+                 if(count($data['company_customers']) > 0) {
                      foreach ($data['company_customers'] as $companyCustomerEmail) {
                          //tie other customers to company
                          $companyCustomer = $this->customer->get(trim($companyCustomerEmail));
-                         $this->addCustomerToCompany($newCompany,$companyCustomer);
+                         $this->addCustomerToCompany($newCompany, $companyCustomer);
                          /* add the customer in the tree under the admin user
-                         They may be moved later on if they are part of a team */
-                         $this->addToTree($companyCustomer->getId(),$adminCustomer->getId());
+                         //They may be moved later on if they are part of a team */
+                         $this->addToTree($companyCustomer->getId(), $adminCustomer->getId());
 
                      }
 
